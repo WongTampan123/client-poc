@@ -1,0 +1,134 @@
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@1,500&family=Poppins:wght@200;300;400;500;600&family=Rubik:wght@600&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    font-family: poppins, sans-serif !important;
+    color: white;    
+    margin:0;
+    background-color: #141414;
+}
+
+p{
+    font-weight: 500;
+    font-size: 1.2rem;
+}
+
+.container-div{
+    display: inline-block;
+    position:absolute
+}
+
+.container-div.kecepatan{
+    z-index: -98;
+    margin-top: 48vh;
+    margin-left: 255px;
+}
+
+.container-div.kecepatan h1{
+    font-family: 'Chakra Petch', sans-serif;
+    font-size: 3rem;
+    line-height: 34px;
+    height: 35px;
+
+}
+
+.container-div.kecepatan h3{
+    line-height: 24px;
+    height: 20px;
+}
+
+.container-div.jam-dan-suhu{
+    z-index: -97;
+    margin-top: 26vh;
+    margin-left: 840px;
+}
+
+.container-div.odo-dan-trip{
+    z-index: -97;
+    margin-top: 73vh;
+    margin-left: 736px;
+}
+
+.container-div .lampu{
+    z-index: -97;
+    margin-top: 86vh;
+    margin-left: 178px;
+}
+
+.container-div .lampu img{
+    width: 28px;
+    margin-right: 1.8rem;
+}
+
+.container-div .lampu-sen{
+    width: 28px;
+    margin-right: 1.8rem;
+    margin-top: -462px;
+    margin-left: 420px
+}
+
+.container-div.meteran{
+    z-index: -97;
+    margin-top: 35vh;
+    margin-left: 753px;
+}
+
+.container-div.meteran .text-meteran{
+    color: #3c3c3c;
+    font-size: 1rem;
+    display: inline-block
+}
+
+.container-div.meteran .bar-temp-baterai{
+    z-index: -97;
+    height: 5px;
+    background-color: red;
+    margin-top: -3vh;
+    margin-left: 22px;
+    transition: all 300ms ease;
+}
+
+.container-div.bar{
+    z-index: -100;
+    width: 123px;
+    height: 135px;
+    background-color: white;
+    transition: all 300ms ease;
+}
+
+.container-div.bar-kanan{
+    z-index: -99;
+    margin-top: 57vh;
+    margin-left: 1090px;
+}
+
+.container-div.jarum{
+    z-index: -99;
+    margin-top: 50vh;
+    margin-left: 50vw;
+}
+
+.container-div.jarum img{
+    transform-origin: left center;
+    transition: all 300ms ease;
+}
+
+.bg-image{
+    background-image: url('../img/background2.png');
+    position: fixed;
+    z-index: -99;
+    width: 100%;
+    height: 100vh;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.text-normal{
+    margin: 0;
+    color: white;    
+}
