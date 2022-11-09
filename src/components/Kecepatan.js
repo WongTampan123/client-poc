@@ -1,19 +1,28 @@
 import React,{useState, useEffect} from "react";
 import axios from "axios";
+import {io} from "socket.io-client";
+
+const socket = io.connect('http://localhost:5000/')
 
 function Kecepatan() {
     const [kecepatan, setKecepatan] = useState(0)
 
     useEffect(function() {
-        const interval = setInterval(()=>{
-            axios.get('http://localhost:5000/data-kecepatan').then((response)=>{
-                const dataKecepatan = response.data.kecepatan
+        // const interval = setInterval(()=>{
+        //     axios.get('http://localhost:5000/data-kecepatan').then((response)=>{
+        //         const dataKecepatan = response.data.kecepatan
 
-                setKecepatan(dataKecepatan)
-            })
-        }, 100)
-        return () => clearInterval(interval)
-    },[])
+        //         setKecepatan(dataKecepatan>80? 80:dataKecepatan)
+        //     })
+        // }, 100)
+        // return () => clearInterval(interval)
+        socket.on('data-kecepatan', (data)=>{
+            const dataKecepatan = data.kecepatan
+
+            setKecepatan(dataKecepatan>80? 80:dataKecepatan)
+        })
+
+    },[socket])
 
     return(
         <div className="container-div kecepatan">

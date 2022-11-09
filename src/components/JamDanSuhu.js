@@ -1,5 +1,8 @@
 import React,{useEffect, useState} from "react";
 import axios from "axios";
+import {io} from "socket.io-client";
+
+const socket = io.connect('http://localhost:5000/')
 
 function JamDanSuhu(){
     const date = new Date()
@@ -10,20 +13,22 @@ function JamDanSuhu(){
 
     useEffect(function() {
         const interval = setInterval(()=>{
-            axios.get('http://localhost:5000/data-suhu-lingkungan').then((response)=>{
-                console.log(response.data)
+            // axios.get('http://localhost:5000/data-suhu-lingkungan').then((response)=>{
+            //     console.log(response.data)
 
-                setSuhu(response.data.suhuLingkungan)                
-            })
+            //     setSuhu(response.data.suhuLingkungan)                
+            // })
             const date = new Date()
             const jamSekarang = date.getHours()
             const menitSekarang = date.getMinutes()>9? date.getMinutes():"0"+date.getMinutes()
             setJam(jamSekarang)
             setMenit(menitSekarang)
-            console.log(jamSekarang+":"+menitSekarang)
-        }, 10000)
-        return () => clearInterval(interval)
-    },[])
+        }, 100)
+        socket.on('data-bar', data => {
+            setSuhu(data.suhu_lingkungan)
+        })
+        return () => clearInterval(interval)        
+    },[socket])
 
     return(
         <div className="container-div jam-dan-suhu">

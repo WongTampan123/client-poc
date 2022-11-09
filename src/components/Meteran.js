@@ -1,14 +1,13 @@
 import React, {useState, useEffect} from "react";
 import axios from "axios";
+import {io} from "socket.io-client";
 
-const client = axios.create({
-    baseURL: "http://localhost:5000" 
-})
+const socket = io.connect('http://localhost:5000/')
 
 function Meteran(prop) {
     const [panjangTempMotor, setPanjangTempMotor] = useState(0)
     const [panjangTempBatere, setPanjangTempBatere] = useState(0)
-    const stylePanjang = [
+    var stylePanjang = [
         {
             width: panjangTempMotor+'px'
         },
@@ -18,21 +17,31 @@ function Meteran(prop) {
     ]
 
     useEffect(function() {
-        const interval = setInterval(()=>{
-            axios.get('http://localhost:5000/data-meteran').then((response)=>{
-                console.log(response.data)
-                const tempMotor = hitungPanjangMeteran(response.data.tempMotor)
-                const tempBatere = hitungPanjangMeteran(response.data.tempBatere)
+        // const interval = setInterval(()=>{
+        //     axios.get('http://localhost:5000/data-meteran').then((response)=>{
+        //         console.log(response.data)
+        //         const tempMotor = hitungPanjangMeteran(response.data.tempMotor>60? 60:response.data.tempMotor)
+        //         const tempBatere = hitungPanjangMeteran(response.data.tempBatere>60? 60:response.data.tempBatere)
 
-                setPanjangTempMotor(tempMotor)
-                setPanjangTempBatere(tempBatere)
+        //         setPanjangTempMotor(tempMotor)
+        //         setPanjangTempBatere(tempBatere)
 
-                stylePanjang[0].width=panjangTempMotor+'px'
-                stylePanjang[1].width=panjangTempBatere+'px'
-            })
-        }, 100)
-        return () => clearInterval(interval)
-    },[hitungPanjangMeteran])
+        //         stylePanjang[0].width=panjangTempMotor+'px'
+        //         stylePanjang[1].width=panjangTempBatere+'px'
+        //     })
+        // }, 100)
+        // return () => clearInterval(interval)
+        socket.on("data-meteran", data => {
+            const tempMotor = hitungPanjangMeteran(data.temp_motor>60? 60:data.temp_motor)
+            const tempBatere = hitungPanjangMeteran(data.temp_batere>60? 60:data.temp_batere)
+
+            setPanjangTempMotor(tempMotor)
+            setPanjangTempBatere(tempBatere)
+
+            stylePanjang[0].width=panjangTempMotor+'px'
+            stylePanjang[1].width=panjangTempBatere+'px'
+        })
+    },[socket])
 
     function hitungPanjangMeteran(isi){
         const panjangMeteran = (329*isi)/60
